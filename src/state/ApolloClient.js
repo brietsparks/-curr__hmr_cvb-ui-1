@@ -19,7 +19,7 @@ networkInterface.use([{
 
 const initApolloClient = (initialState = {}) => new ApolloClient({
   initialState,
-  dataIdFromObject: o => o.id,
+  dataIdFromObject: o => o.__typename + '.' + o.id,
   networkInterface,
   connectToDevTools: true,
 });

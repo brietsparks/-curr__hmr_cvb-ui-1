@@ -1,1 +1,2 @@
-export const getSubstate = state => state.apollo;
+export const getApolloSubstate = state => state.apollo;
+

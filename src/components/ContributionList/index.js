@@ -1,0 +1,22 @@
+import React from 'react';
+
+import Contribution from 'src/components/Contribution';
+
+const ContributionList = ({ contributions }) => {
+
+  const contributionComponents = contributions.map(contribution => (
+    <li key={contribution.id}>
+      <Contribution {...contribution} />
+    </li>
+  ));
+
+  return (
+    <div>
+      <ul>
+        {contributionComponents}
+      </ul>
+    </div>
+  );
+};
+
+export default ContributionList;
