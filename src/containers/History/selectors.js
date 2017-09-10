@@ -14,15 +14,24 @@ export const getAppliedSkillFilters = props => {
   return getProjectTreeViewSubstate(props).filters.skills;
 };
 
+export const getSkillsFromContribution = ({ contribution }) => {
+  const skills = [];
+
+  contribution.utilizations.forEach(utilization => {
+    skills.push(utilization.skill);
+  });
+
+  return skills;
+};
+
 // recursively get skills of all nodes of the project tree
 export const getSkillsFromProjectTree = ({ projectTree }) => {
   let skills = [];
 
   if (projectTree.contributions) {
     projectTree.contributions.forEach(contribution => {
-      contribution.utilizations.forEach(utilization => {
-        skills.push(utilization.skill);
-      })
+      const contributionSkills = getSkillsFromContribution({ contribution });
+      skills = skills.concat(contributionSkills);
     });
   }
 
@@ -38,19 +47,44 @@ export const getSkillsFromProjectTree = ({ projectTree }) => {
   return skills;
 };
 
-export const applyFiltersToProjectTree = ({ projectTree, skillFilters }) => {
-  // the filters applied to this projectTree
-  const projectSkillFilters = skillFilters.filter(sf => sf.projectId === projectTree.id);
+// whether the array includes all items from requiredItems array
+export const arrayIncludesAll = ({ array, requiredItems }) => {
+  return requiredItems.every(requiredItem => array.includes(requiredItem))
+};
 
-  // the skill ids of the filters
-  const filterSkillIds = projectSkillFilters.map(sf => sf.skillId);
+
+
+export const applyFiltersToProjectTree = ({ projectTree, skillFilters }) => {
+  // array of the skill ids of the filters applied to this projectTree
+  let filterSkillIds;
+  const projectSkillFilters = skillFilters.filter(sf => sf.projectId === projectTree.id);
+  filterSkillIds = projectSkillFilters.map(sf => sf.skillId);
 
   // array of the skill ids of the contributions
+  let projectTreeSkillIds;
   const projectTreeSkills = getSkillsFromProjectTree({ projectTree });
-  const projectTreeSkillIds = projectTreeSkills.map(skill => skill.id);
+  projectTreeSkillIds = projectTreeSkills.map(skill => skill.id);
 
-  // whether the skill ids of the project tree contain an skill id of one of the filters
-  projectTree.matchesFilter = projectTreeSkillIds.some(skillId => filterSkillIds.includes(skillId));
+  // whether the skill ids of the project tree contain all skill ids of any of the filters
+  projectTree.matchesFilter = arrayIncludesAll({
+    array: projectTreeSkillIds,
+    requiredItems: filterSkillIds,
+  });
+
+  projectTree.contributions.forEach(contribution => {
+    if (projectTree.matchesFilter) {
+      let contributionSkillIds;
+      const contributionSkills = getSkillsFromContribution({ contribution });
+      contributionSkillIds = contributionSkills.map(contribution => contribution.id);
+
+      contribution.matchesFilter = arrayIncludesAll({
+        array: contributionSkillIds,
+        requiredItems: filterSkillIds
+      });
+    } else {
+      contribution.matchesFilter = false;
+    }
+  });
 
   // recursively apply filters to child projects
   projectTree.childProjects.forEach(childProject => {
@@ -63,6 +97,8 @@ export const applyFiltersToProjectTree = ({ projectTree, skillFilters }) => {
   return projectTree;
 };
 
+
+/*
 export const getFilteredProjectArray_ = ({ projects, skillFilters }) => {
 
   const defaultMatchValue = !skillFilters || skillFilters.length === 0;
@@ -130,3 +166,4 @@ export const applyfiltersToProjects_ = ({ projectArray, skillFilters }) => {
 
   return filteredProjectArray;
 };
+*/
