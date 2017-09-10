@@ -1,29 +1,37 @@
+import { getProjectTreeViewSubstate } from 'src/substates/projectTreeView/selectors';
+import ProjectModel from './ProjectModel';
+import ContributionModel from './ContributionModel';
+
+// get the data returned by the apollo query
 export const getProjectsFromProps = props => {
   return props.data.getProjectsByUserId;
 };
 
-export const createProjectTrees = ({ projectArray, parentId = null }) => {
-
-  // a seed is a root node that does not have its children attached yet
-  let seeds = projectArray.filter(
-    p => p.parent_id === parentId ? String(parentId) : null
-  );
-
-
-  // build each tree from its seed
-  const trees = [];
-  seeds.forEach(seed => {
-    const tree = Object.assign({}, seed);
-
-    tree.childProjects = createProjectTrees({
-      projectArray,
-      parentId: parseInt(seed.id)
-    });
-
-    trees.push(tree);
-  });
-
-
-  return trees;
+// get applied skills filters from the projectTreeView substate
+export const getAppliedSkillFilters = props => {
+  return getProjectTreeViewSubstate(props).filters.skills;
 };
 
+export const applyfiltersToProjects = ({
+  projectArray,
+  skillFilters
+}) => {
+  projectArray.forEach(project => {
+    const projectModel = new ProjectModel({ project });
+    if (projectModel.)
+
+    /*
+    const projectSkills = getSkillsFromProject({ project });
+    const projectSkillFilters = skillFilters.filter(sf => sf.projectId === project.id);
+
+    const projectMatched = containsAFilteredSkill({
+      skills: projectSkills,
+      skillFilters: projectSkillFilters
+    });
+
+    if (projectMatched) {
+
+    }
+    */
+  })
+};

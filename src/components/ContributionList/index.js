@@ -11,11 +11,9 @@ const ContributionList = ({ contributions }) => {
   ));
 
   return (
-    <div>
-      <ul>
-        {contributionComponents}
-      </ul>
-    </div>
+    <ul>
+      {contributionComponents}
+    </ul>
   );
 };
 

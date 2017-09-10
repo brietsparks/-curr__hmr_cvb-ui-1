@@ -1,2 +1,4 @@
-export const getApolloSubstate = state => state.apollo;
+import { substateKey } from './constants';
+
+export const getApolloSubstate = state => state[substateKey];
 
