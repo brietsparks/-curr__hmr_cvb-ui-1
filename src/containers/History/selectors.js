@@ -12,26 +12,17 @@ export const getAppliedSkillFilters = props => {
   return getProjectTreeViewSubstate(props).filters.skills;
 };
 
-export const applyfiltersToProjects = ({
-  projectArray,
-  skillFilters
-}) => {
+// return a deep-cloned project trees that have matchesFilter attribute on the nodes
+export const applyfiltersToProjects = ({ projectArray, skillFilters }) => {
+  const filteredProjectArray = [];
+
   projectArray.forEach(project => {
     const projectModel = new ProjectModel({ project });
-    if (projectModel.)
 
-    /*
-    const projectSkills = getSkillsFromProject({ project });
-    const projectSkillFilters = skillFilters.filter(sf => sf.projectId === project.id);
+    const filteredProject = projectModel.getFilteredProject({ skillFilters });
 
-    const projectMatched = containsAFilteredSkill({
-      skills: projectSkills,
-      skillFilters: projectSkillFilters
-    });
+    filteredProjectArray.push(filteredProject);
+  });
 
-    if (projectMatched) {
-
-    }
-    */
-  })
+  return filteredProjectArray;
 };

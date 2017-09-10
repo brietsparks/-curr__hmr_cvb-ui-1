@@ -1,7 +1,29 @@
+import { cloneDeep } from 'lodash';
 
 export default class ContributionModel {
   constructor({ contribution }) {
     this.contributionData = contribution;
+  }
+
+  getFilteredContribution({ skillFilters }) {
+    const filteredContribution = cloneDeep(this.contributionData);
+
+    filteredContribution.matchesFilter = this.matchesFilterCriteria({ skillFilters });
+
+    return filteredContribution;
+  }
+
+  matchesFilterCriteria({ skillFilters }) {
+    let matches = false;
+
+    const parentSkillFilters = skillFilters.filter(sf => sf.projectId === this.getParentId());
+    parentSkillFilters.forEach(sf => {
+      if (this.containsSkill(sf.skillId)) {
+        matches = true;
+      }
+    });
+
+    return matches;
   }
 
   containsSkill({ skillId }) {
@@ -10,5 +32,9 @@ export default class ContributionModel {
     );
 
     return !!utilization;
+  }
+
+  getParentId() {
+    return this.contributionData.parent_id;
   }
 }
