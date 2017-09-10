@@ -7,7 +7,9 @@
     "prebuild": "rimraf dist",
     "build": "cross-env NODE_ENV=production webpack -p --config webpack.config.production.js",
     "postbuild": "copyfiles index.html dist",
-    "test": "./node_modules/.bin/mocha --compilers js:babel-register -w tools/testSetup.js \"src/**/*.test.js\""
+    "test": "./node_modules/.bin/mocha-webpack --webpack-config webpack.config.js \"src/**/*.test.js\"",
+
+    "test_": "./node_modules/.bin/mocha --compilers js:babel-register -w tools/testSetup.js \"src/**/*.test.js\""
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,7 @@
     "expect": "^21.0.2",
     "jsdom": "^11.2.0",
     "mocha": "^3.5.1",
+    "mocha-webpack": "next",
     "react-addons-test-utils": "^15.6.0",
     "react-hot-loader": "^3.0.0-beta.6",
     "redux-devtools-extension": "^2.13.2",
