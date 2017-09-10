@@ -5,7 +5,12 @@ import { actions as actionTypes } from './constants';
 const defaultState = {
 
   filters: {
-    skills: []
+    skills: [
+      {
+        projectId: 1,
+        skillId: 1000,
+      }
+    ]
   }
 
 };

@@ -4,6 +4,7 @@ import ContributionModel from './ContributionModel';
 export default class ProjectModel {
   constructor({ project }) {
     this.projectData = project;
+
     this.contributionModels = project.contributions.map(contribution => (
       new ContributionModel({ contribution })
     ));
@@ -37,6 +38,17 @@ export default class ProjectModel {
     });
 
     return matches;
+  }
+
+  getSkills() {
+    let skills = [];
+
+    this.contributionModels.forEach(contributionModel => {
+      const contributionSkills = contributionModel.getSkills();
+      skills = skills.concat(contributionSkills);
+    });
+
+    return skills;
   }
 
   containsSkill({ skillId }) {

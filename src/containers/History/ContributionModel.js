@@ -26,6 +26,16 @@ export default class ContributionModel {
     return matches;
   }
 
+  getSkills() {
+    const skills = [];
+
+    this.contributionData.utilizations.forEach(utilization => {
+      skills.push(utilization.skill);
+    });
+
+    return skills;
+  }
+
   containsSkill({ skillId }) {
     const utilization = this.contributionData.utilizations.find(
       utilization => utilization.skill.id === skillId

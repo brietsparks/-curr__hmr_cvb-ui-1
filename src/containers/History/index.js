@@ -1,29 +1,33 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { gql, graphql } from 'react-apollo';
-import { ProjectListQuery } from './query';
+import { cloneDeep } from 'lodash';
 
+import { ProjectListQuery } from './query';
 import {
   addSkillFilter as addSkillFilterAction,
   removeSkillFilter as removeSkillFilterAction
 } from 'src/substates/projectTreeView/actions';
 
-import HistoryRootComponent from 'src/components/ProjectTree';
+import ProjectTreeRoot from 'src/components/ProjectTree';
 import ProjectTrees from './ProjectTrees';
-import { getProjectsFromProps, getSkillsFromProject, getAppliedSkillFilters } from './selectors';
+import {
+  getProjectsFromProps,
+  getAppliedSkillFilters,
+  getSkillsFromProjectTree,
+  applyFiltersToProjectTree
+} from './selectors';
 
 
 const History = props => {
 
   const projects = getProjectsFromProps(props);
+  const skillFilters = getAppliedSkillFilters(props);
 
   if (projects) {
-    projects.forEach(p => console.log(getSkillsFromProject({project: p})));
-
-    const projectTrees = ProjectTrees({ projectArray: projects });
-
-    // const filterableSkills = getFilterableSkills({ projectTrees });
-    // console.log(getAppliedSkillFilters(props))
+    const projectTrees = ProjectTrees({
+      projectArray: cloneDeep(projects)
+    });
 
     const addSkillFilter = ({ projectId, skillId }) => (
       props.dispatch(addSkillFilterAction({ projectId, skillId }))
@@ -33,12 +37,28 @@ const History = props => {
       props.dispatch(removeSkillFilterAction({ projectId, skillId }))
     );
 
+    let projectTreeRoot = {
+      id: 0,
+      title: "Briet Sparks",
+      subtitle: "Professional History",
+      childProjects: projectTrees,
+    };
+
+    projectTreeRoot = applyFiltersToProjectTree({
+      projectTree: projectTreeRoot,
+      skillFilters
+    });
+
+    const filterableSkills = getSkillsFromProjectTree({ projectTree: projectTreeRoot });
+
     return (
-      <HistoryRootComponent
-        id={0}
-        title={"Briet Sparks"}
-        subtitle={"Professional History"}
+      <ProjectTreeRoot
+        id={projectTreeRoot.id}
+        title={projectTreeRoot.title}
+        subtitle={projectTreeRoot.subtitle}
         childProjects={projectTrees}
+
+        filterableSkills={filterableSkills}
         addSkillFilter={addSkillFilter}
         removeSkillFilter={removeSkillFilter}
       />
