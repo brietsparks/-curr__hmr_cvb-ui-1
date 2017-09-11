@@ -13,17 +13,16 @@ import ProjectTreeRoot from 'src/components/ProjectTree';
 import ProjectTrees from './ProjectTrees';
 import {
   getProjectsFromProps,
-  // getAppliedSkillFilters,
-  // getSkillsFromProjectTree,
-  // applyFiltersToProjectTree
+  getAppliedSkillFilters,
+  getSkillsFromProjectTree,
+  applyFiltersToProjectTree
 } from './selectors';
 
-import ProjectModel from './ProjectModel';
 
 const History = props => {
 
   const projects = getProjectsFromProps(props);
-  // const skillFilters = getAppliedSkillFilters(props);
+  const skillFilters = getAppliedSkillFilters(props);
 
   if (projects) {
     const projectTrees = ProjectTrees({
@@ -45,23 +44,12 @@ const History = props => {
       childProjects: projectTrees,
     };
 
-    const projectModel = new ProjectModel({
-      projectData: projectTreeRoot
+    projectTreeRoot = applyFiltersToProjectTree({
+      projectTree: projectTreeRoot,
+      skillFilters
     });
 
-    projectModel.applyFilter(pm => {
-
-    })
-    console.log(projectModel.getSkills());
-
-    return null;
-
-    // projectTreeRoot = applyFiltersToProjectTree({
-    //   projectTree: projectTreeRoot,
-    //   skillFilters
-    // });
-
-    // const filterableSkills = getSkillsFromProjectTree({ projectTree: projectTreeRoot });
+    const filterableSkills = getSkillsFromProjectTree({ projectTree: projectTreeRoot });
 
     return (
       <ProjectTreeRoot

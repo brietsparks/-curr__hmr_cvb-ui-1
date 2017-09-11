@@ -4,12 +4,18 @@ import UtilizationList from 'src/components/UtilizationList';
 import SampleList from 'src/components/SampleList';
 
 const Contribution = ({
-  id, short_summary, long_summary, samples, utilizations
+  id,
+  short_summary,
+  long_summary,
+  samples,
+  utilizations,
+  matchesFilter
 }) => {
   return (
     <div>
       <div>
-        <p>Summary: {short_summary}</p>
+        <h4>MatchesFilter {matchesFilter ? "1" : "0"}</h4>
+        <p><strong>Summary:</strong> {short_summary}</p>
         <p>Summary (cont'd): {long_summary}</p>
       </div>
 

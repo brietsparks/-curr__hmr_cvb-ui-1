@@ -4,6 +4,8 @@ import ContributionList from 'src/components/ContributionList';
 import ProjectTreeList from 'src/components/ProjectTreeList';
 import FilterBySkills from 'src/components/FilterBySkills';
 
+import { getSkillsFromProjectTree } from 'src/containers/History/selectors';
+
 const ProjectTree = ({
   id,
   title,
@@ -11,19 +13,27 @@ const ProjectTree = ({
   contributions = [],
   childProjects = [],
 
-  filterableSkills,
+  matchesFilter,
   addSkillFilter,
   removeSkillFilter,
 }) => {
 
+  if (!matchesFilter) {
+    return null;
+  }
+
   const hasContributions = contributions.length > 0;
   const hasChildProjects = childProjects.length > 0;
+  const filterableSkills = getSkillsFromProjectTree({
+    projectTree: { childProjects, contributions }
+  });
 
   return (
     <div>
       <div>
         <h2>{title}</h2>
         <h3>{subtitle}</h3>
+        <h3>MatchesFilter: {matchesFilter ? "1": "0"}</h3>
       </div>
 
       <div>
@@ -47,7 +57,11 @@ const ProjectTree = ({
           { hasChildProjects &&
           <div>
             <p>Projects</p>
-            <ProjectTreeList trees={childProjects}/>
+            <ProjectTreeList
+              trees={childProjects}
+              addSkillFilter={addSkillFilter}
+              removeSkillFilter={removeSkillFilter}
+            />
           </div>
           }
         </div>

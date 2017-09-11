@@ -1,16 +1,11 @@
-import { cloneDeep } from 'lodash';
+import { cloneDeep, remove } from 'lodash';
 
 import { actions as actionTypes } from './constants';
 
 const defaultState = {
 
   filters: {
-    skills: [
-      {
-        projectId: 1,
-        skillId: 1000,
-      }
-    ]
+    skills: []
   }
 
 };
@@ -24,7 +19,10 @@ const projectTreeViewReducer = (initialState = defaultState, action = {}) => {
       state.filters.skills.push(payload);
       break;
     case actionTypes.filters.skills.REMOVE:
-      // todo: filter by skillId and projectId and remove
+      remove(state.filters.skills, skillFilter => (
+        skillFilter.projectId === payload.projectId &&
+        skillFilter.skillId === payload.skillId
+      ));
       break;
   }
 
