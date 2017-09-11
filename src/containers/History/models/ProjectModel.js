@@ -1,3 +1,4 @@
+import { uniqBy } from 'lodash';
 import ContributionModel from './ContributionModel';
 
 export default class ProjectModel {
@@ -57,23 +58,39 @@ export default class ProjectModel {
     this.contributionModels.forEach(cm => skills = skills.concat(cm.getSkills()));
     this.childProjectModels.forEach(cpm => skills = skills.concat(cpm.getSkills()));
 
-    return skills;
+    return uniqBy(skills, skill => skill.id);
   }
 
   getSkillIds() {
     return this.getSkills().map(skill => skill.id);
   }
 
-  containsSkillsById(skillIds) {
-    skillIds.every(skillId => this.getSkillIds().includes(skillId));
+  containsSkillsByIds(skillIds) {
+    return skillIds.every(skillId => this.getSkillIds().includes(skillId));
   }
 
-  applyFilter(cb) {
+  applyFilters(cb, matchCb, mismatchCb) {
+    if (cb(this)) {
+      matchCb(this);
+    } else {
+      mismatchCb(this);
+    }
+  }
 
+  recursiveMap(conditionCb, recurseCb, terminatingCb) {
+    if (conditionCb(this)) {
+      recurseCb(this);
+    } else {
+      terminatingCb(this);
+    }
   }
 
   getId() {
     return this._projectData.id;
+  }
+
+  getParent() {
+    return this.parentModel;
   }
 
 }

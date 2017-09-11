@@ -4,7 +4,8 @@ import ContributionList from 'src/components/ContributionList';
 import ProjectTreeList from 'src/components/ProjectTreeList';
 import FilterBySkills from 'src/components/FilterBySkills';
 
-import { getSkillsFromProjectTree } from 'src/containers/History/selectors';
+import ProjectModel from 'src/containers/History/models/ProjectModel';
+import SkillFiltersModel from 'src/containers/History/models/SkillFiltersModel';
 
 const ProjectTree = ({
   id,
@@ -13,34 +14,40 @@ const ProjectTree = ({
   contributions = [],
   childProjects = [],
 
-  matchesFilter,
+  skillFilters,
   addSkillFilter,
   removeSkillFilter,
 }) => {
 
-  if (!matchesFilter) {
-    return null;
-  }
-
   const hasContributions = contributions.length > 0;
   const hasChildProjects = childProjects.length > 0;
-  const filterableSkills = getSkillsFromProjectTree({
-    projectTree: { childProjects, contributions }
+
+
+  const projectModel = new ProjectModel({
+    projectData: { id, contributions, childProjects }
   });
+
+  const skillFiltersModel = new SkillFiltersModel({
+    skillFiltersData: skillFilters
+  });
+
+  console.log(skillFiltersModel.getSkillIdsByProjectId(id))
+
+  const match = matchesFilterCriteria({ id, projectModel, skillFiltersModel });
 
   return (
     <div>
       <div>
         <h2>{title}</h2>
         <h3>{subtitle}</h3>
-        <h3>MatchesFilter: {matchesFilter ? "1": "0"}</h3>
+        <h4>Match: { match ? "1" : "0"}</h4>
       </div>
 
       <div>
         <div>
           <FilterBySkills
             projectId={id}
-            filterableSkills={filterableSkills}
+            filterableSkills={projectModel.getSkills()}
             addSkillFilter={addSkillFilter}
             removeSkillFilter={removeSkillFilter}
           />
@@ -72,3 +79,20 @@ const ProjectTree = ({
 };
 
 export default ProjectTree;
+
+const matchesFilterCriteria = ({ projectModel, skillFiltersModel }) => {
+  const parentModel = projectModel.getParent();
+
+  if (!parentModel) {
+    return true;
+  }
+
+  const parentId = parentModel.getId();
+
+  const filterSkillIds = skillFiltersModel.getSkillIdsByProjectId(parentId);
+
+  const matches = projectModel.containsSkillsByIds(filterSkillIds);
+
+  return matches;
+};
+

@@ -1,9 +1,5 @@
 export default class SkillFiltersModel {
-  constructor({ skillFiltersData }) {
-    if (!skillFiltersData) {
-      throw new Error('SkillFiltersModel requires skillFiltersData object literal');
-    }
-
+  constructor({ skillFiltersData = [] }) {
     const _skillFiltersData = skillFiltersData;
     this._skillFiltersData = _skillFiltersData;
   }
