@@ -56,7 +56,6 @@ module.exports = {
   devServer: {
     host: 'localhost',
     port: 3000,
-    overlay: true,
 
     historyApiFallback: true,
     // respond to 404s with index.html
@@ -67,9 +66,9 @@ module.exports = {
 
   resolve: {
     extensions: ['.js'],
-    modules: ["node_modules"],
+    modules: ['node_modules'],
     alias: {
-      src: path.resolve(__dirname, "src")
+      src: path.resolve(__dirname, 'src')
     }
   },
 };

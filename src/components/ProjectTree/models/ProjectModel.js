@@ -86,6 +86,10 @@ export default class ProjectModel {
   }
 
   getId() {
+    if (!this._projectData.id) {
+      throw new Error('Id not set on ProjectModel.')
+    }
+
     return this._projectData.id;
   }
 

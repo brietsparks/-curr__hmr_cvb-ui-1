@@ -1,21 +1,34 @@
 {
-  "name": "resumapp-client-browser",
+  "name": "react-hot-boilerplate",
   "version": "1.0.0",
+  "description": "Boilerplate for ReactJS project with hot code reloading",
   "scripts": {
     "start": "webpack-dev-server",
     "lint": "eslint src",
     "prebuild": "rimraf dist",
     "build": "cross-env NODE_ENV=production webpack -p --config webpack.config.production.js",
-    "postbuild": "copyfiles index.html dist",
-    "test": "./node_modules/.bin/mocha-webpack --webpack-config webpack.config.js \"src/**/*.test.js\"",
-
-    "test_": "./node_modules/.bin/mocha --compilers js:babel-register -w tools/testSetup.js \"src/**/*.test.js\""
+    "postbuild": "copyfiles index.html dist"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/gaearon/react-hot-boilerplate.git"
   },
+  "keywords": [
+    "react",
+    "reactjs",
+    "boilerplate",
+    "hot",
+    "reload",
+    "hmr",
+    "live",
+    "edit",
+    "webpack"
+  ],
+  "author": "Dan Abramov <dan.abramov@me.com> (http://github.com/gaearon)",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gaearon/react-hot-boilerplate/issues"
+  },
   "homepage": "https://github.com/gaearon/react-hot-boilerplate",
   "devDependencies": {
     "babel-core": "^6.22.1",
@@ -29,8 +42,8 @@
     "enzyme": "^2.9.1",
     "expect": "^21.0.2",
     "jsdom": "^11.2.0",
-    "mocha": "^3.5.1",
-    "mocha-webpack": "next",
+    "mocha": "^3.5.3",
+    "mocha-webpack": "^0.7.0",
     "react-addons-test-utils": "^15.6.0",
     "react-hot-loader": "^3.0.0-beta.6",
     "redux-devtools-extension": "^2.13.2",
