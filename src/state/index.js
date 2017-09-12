@@ -1,6 +1,6 @@
-import ApolloClient from 'src/state/ApolloClient';
-import Store from 'src/state/Store';
-import { substateKey as apolloStateKey } from 'src/substates/apollo/constants';
+import ApolloClient from './ApolloClient';
+import Store from './Store';
+import { stateKey as apolloStateKey } from './apollo/constants';
 
 export const apolloClient = ApolloClient();
 

@@ -1,16 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { gql, graphql } from 'react-apollo';
-import { cloneDeep } from 'lodash';
 
 import { ProjectListQuery } from './query';
-import {
-  addSkillFilter as addSkillFilterAction,
-  removeSkillFilter as removeSkillFilterAction
-} from 'src/substates/projectTreeView/actions';
+import { addSkillFilter, removeSkillFilter } from 'src/state/projectTreeView/actions';
 
-import ProjectTreeRoot from 'src/components/ProjectTree';
-import ProjectTrees from './ProjectTrees';
+// import ProjectTreeRoot from 'src/components/ProjectTree';
+// import ProjectTrees from './ProjectTrees';
+
+import ProjectTree from 'src/models/ProjectTree';
+
 import {
   getProjectsFromProps,
   getSkillFiltersFromProps,
@@ -24,16 +23,26 @@ const History = props => {
   const skillFilters = getSkillFiltersFromProps(props);
 
   if (projects) {
+    const projectModel = ProjectTree(projects);
+    console.log(projectModel);
+  }
+  return null;
+
+
+
+
+  if (projects) {
     const projectTrees = ProjectTrees({
       projectArray: cloneDeep(projects)
     });
 
-    const addSkillFilter = ({ projectId, skillId }) => (
-      props.dispatch(addSkillFilterAction({ projectId, skillId }))
+    const actions = {};
+    actions.addSkillFilter = ({ projectId, skillId }) => (
+      props.dispatch(addSkillFilter({ projectId, skillId }))
     );
 
-    const removeSkillFilter = ({ projectId, skillId }) => (
-      props.dispatch(removeSkillFilterAction({ projectId, skillId }))
+    actions.removeSkillFilter = ({ projectId, skillId }) => (
+      props.dispatch(removeSkillFilter({ projectId, skillId }))
     );
 
     let projectTreeRoot = {
@@ -59,6 +68,14 @@ const History = props => {
 
   return null;
 };
-const HistoryWithData = graphql(ProjectListQuery("0"))(History);
+
+const HistoryWithData = graphql(ProjectListQuery('0'))(History);
+
+const mapStateToProps = state => {
+  return {
+
+  }
+};
+
 const HistoryWithDataAndState = connect(state => state)(HistoryWithData);
 export default HistoryWithDataAndState;

@@ -1,4 +1,7 @@
-import { getProjectTreeViewSubstate } from 'src/substates/projectTreeView/selectors';
+import { createSelector } from 'reselect';
+// todo: create selectors
+
+import { getProjectTreeViewState } from 'src/state/projectTreeView/selectors';
 
 // get the data returned by the apollo query
 export const getProjectsFromProps = props => {
@@ -7,5 +10,5 @@ export const getProjectsFromProps = props => {
 
 // get skills filters from the projectTreeView substate
 export const getSkillFiltersFromProps = props => {
-  return getProjectTreeViewSubstate(props).filters.skills;
+  return getProjectTreeViewState(props).filters.skills;
 };

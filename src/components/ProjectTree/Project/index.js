@@ -1,50 +1,41 @@
 import React from 'react';
 
-import ProjectHeader from './Header';
+// Components
 import ContributionList from '../ContributionList';
 import ProjectTreeList from '../ProjectList';
+import SkillFilter from './SkillFilter';
 
-import FilterBySkills from 'src/components/FilterBySkills';
-
-import { evaluatePropsAgainstFilters } from '../util';
-import { containsNestedSkills } from './filterCallbacks';
+// HOC
+import Filterable from './FilterableHOC';
 
 export const Project = (props) => {
   const {
-    dispatch,
+    actions,
+    viewState,
+    projectModel,
 
-    id,
-    title,
-    subtitle,
+    id, title, subtitle,
     contributions = [],
     childProjects = [],
-
-    viewState,
   } = props;
-
-  const meetsFilterCriteria = evaluatePropsAgainstFilters(props, [
-    containsNestedSkills
-  ]);
-
-  if (!meetsFilterCriteria) {
-    return null;
-  }
 
   const hasContributions = contributions.length > 0;
   const hasChildProjects = childProjects.length > 0;
 
   return (
     <div>
-      <ProjectHeader title={title} subtitle={subtitle} />
+      <div>
+        <h2>{title}</h2>
+        <h3>{subtitle}</h3>
+      </div>
 
       <div>
-        <div>
-          <FilterBySkills
-            projectId={id}
-            // filterableSkills={projectModel.getSkills()}
-            // dispatch={dispatch}
-          />
-        </div>
+        <SkillFilter
+          projectId={id}
+          filterableSkills={projectModel.getSkills()}
+          addSkillFilter={actions.addSkillFilter}
+          removeSkillFilter={actions.removeSkillFilter}
+        />
 
         <div>
           { hasContributions &&
@@ -52,7 +43,7 @@ export const Project = (props) => {
             <p>Contributions</p>
             <ContributionList
               contributions={contributions}
-              dispatch={dispatch}
+              actions={actions}
               viewState={viewState}
             />
           </div>
@@ -63,11 +54,8 @@ export const Project = (props) => {
             <p>Projects</p>
             <ProjectTreeList
               trees={childProjects}
-              dispatch={dispatch}
+              actions={actions}
               viewState={viewState}
-
-              // addSkillFilter={addSkillFilter}
-              // removeSkillFilter={removeSkillFilter}
             />
           </div>
           }
@@ -78,4 +66,4 @@ export const Project = (props) => {
   );
 };
 
-export default Project;
+export default Filterable(Project);

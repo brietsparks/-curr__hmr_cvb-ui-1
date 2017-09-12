@@ -1,15 +1,11 @@
-export const evaluatePropsAgainstFilters = (
-  props,
+export const evaluateFilterCallbacks = (
   filterCallbacks = [],
-  getFilterState = (props) => props.projectTreeViewState.filters
 ) => {
   let meetsFilterCriteria = true;
 
-  const filters = getFilters(props);
-
   filterCallbacks.forEach(cb => {
     if (meetsFilterCriteria) {
-      meetsFilterCriteria = cb(props, filters);
+      meetsFilterCriteria = cb();
     }
   });
 

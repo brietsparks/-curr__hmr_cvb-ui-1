@@ -85,16 +85,49 @@ export default class ProjectModel {
     }
   }
 
+  /** SIMPLE GETTERS */
+  getAttribute(attribute) {
+    if (!this._projectData.hasOwnProperty(attribute)) {
+      throw Error(`In ProjectModel, projectData does not contain attribute "${attribute}"`);
+    }
+
+    return this._projectData[attribute];
+  }
+
+  getAttributes(attributes = []) {
+    const map = {};
+
+    if (!attributes) {
+      throw new Error('ProjectModel get method expects an array of project attribute names to get');
+    }
+
+    attributes.forEach(attribute => {
+      map[attribute] = this.getAttribute(attribute);
+    });
+
+    return map;
+  }
+
   getId() {
-    if (!this._projectData.id) {
+    const id = this._projectData.id;
+
+    if (!id) {
       throw new Error('Id not set on ProjectModel.')
     }
 
-    return this._projectData.id;
+    return id;
   }
 
   getParent() {
     return this.parentModel;
+  }
+
+  getChildProjectModels() {
+    return this.childProjectModels;
+  }
+
+  getContributionModels() {
+    return this.contributionModels;
   }
 
 }

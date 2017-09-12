@@ -1,18 +1,7 @@
-import ProjectModel from '../models/ProjectModel';
-import SkillFiltersModel from '../models/SkillFiltersModel';
-
-export const containsNestedSkills = (props, filterState) => {
-  const { id, contributions, childProjects } = props;
-
-  const projectModel = new ProjectModel({
-    projectData: { id, contributions, childProjects }
-  });
-
-  const skillFiltersModel = new SkillFiltersModel({
-    skillFiltersData: filterState
-  });
-
+export const ContainsNestedSkills = ({
+  projectModel,
+  skillFiltersModel
+}) => () => {
   const skillIds = skillFiltersModel.getSkillIdsByProjectId(id);
-
   return projectModel.containsSkillsByIds(skillIds);
-}
+};
