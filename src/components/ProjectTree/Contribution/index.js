@@ -6,7 +6,6 @@ import SampleList from 'src/components/SampleList';
 const Contribution = ({
   model,
   actions,
-  viewState
 }) => {
   const {
     id,

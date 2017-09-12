@@ -10,13 +10,13 @@ import Filterable from './FilterableHOC';
 
 export const Project = ({
   actions,
-  viewState,
+  filters,
+  appliedFilters,
   model,
 }) => {
+
   const {
-    id,
-    title,
-    subtitle,
+    id, title, subtitle,
     contributionModels = [],
     childProjectModels = [],
   } = model;
@@ -32,12 +32,12 @@ export const Project = ({
       </div>
 
       <div>
-        {/*<SkillFilter*/}
-          {/*projectId={id}*/}
-          {/*filterableSkills={projectModel.getSkills()}*/}
-          {/*addSkillFilter={actions.addSkillFilter}*/}
-          {/*removeSkillFilter={actions.removeSkillFilter}*/}
-        {/*/>*/}
+        <SkillFilter
+          projectId={id}
+          filterableSkills={model.getSkills()}
+          addSkillFilter={actions.addSkillFilter}
+          removeSkillFilter={actions.removeSkillFilter}
+        />
 
         <div>
           { hasContributions &&
@@ -46,7 +46,6 @@ export const Project = ({
             <ContributionList
               models={contributionModels}
               actions={actions}
-              viewState={viewState}
             />
           </div>
           }
@@ -57,7 +56,7 @@ export const Project = ({
             <ProjectTreeList
               models={childProjectModels}
               actions={actions}
-              viewState={viewState}
+              filters={filters}
             />
           </div>
           }
@@ -68,5 +67,5 @@ export const Project = ({
   );
 };
 
-// export default Filterable(Project);
-export default (Project);
+export default Filterable(Project);
+// export default (Project);

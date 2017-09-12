@@ -2,7 +2,7 @@ import React from 'react';
 
 import Project from '../Project';
 
-const ProjectTreeList = ({ models, actions, viewState }) => {
+const ProjectTreeList = ({ models, actions, filters }) => {
 
   const projectComponents = models.map(model => {
     return (
@@ -10,7 +10,7 @@ const ProjectTreeList = ({ models, actions, viewState }) => {
         <Project
           model={model}
           actions={actions}
-          viewState={viewState}
+          filters={filters}
         />
       </li>
     )

@@ -3,5 +3,11 @@ export const ContainsNestedSkills = ({
   skillFiltersModel
 }) => () => {
   const skillIds = skillFiltersModel.getSkillIdsByProjectId(projectModel.id);
-  return projectModel.containsSkillsByIds(skillIds);
+
+  const contains = projectModel.containsSkillIds(skillIds);
+
+  console.log(skillIds, projectModel.getSkills());
+
+  console.log(contains);
+  return contains;
 };

@@ -9,6 +9,6 @@ export const getProjectsFromProps = props => {
 };
 
 // get skills filters from the projectTreeView substate
-export const getSkillFiltersFromProps = props => {
-  return getProjectTreeViewState(props).filters.skills;
+export const getSkillFiltersFromState = state => {
+  return getProjectTreeViewState(state).filters.skills;
 };

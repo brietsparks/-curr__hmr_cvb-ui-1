@@ -7,11 +7,13 @@ import ProjectTreeComponent from 'src/components/ProjectTree';
 import ProjectTree from 'src/models/ProjectTree';
 
 // selectors
-import { getProjectTreeViewState } from 'src/state/projectTreeView/selectors';
-import { getProjectsFromProps, } from './selectors';
+import { getProjectsFromProps, getSkillFiltersFromState } from './selectors';
 
 // actions
 import { addSkillFilter, removeSkillFilter } from 'src/state/projectTreeView/actions';
+
+// models
+import SkillFiltersModel from 'src/models/SkillFilters';
 
 // graphql query
 import { ProjectListQuery } from './query';
@@ -29,17 +31,16 @@ const History = props => {
   );
 
   const projects = getProjectsFromProps(props);
-  const { viewState } = props;
-  
+  const { filters } = props;
+
   if (projects) {
     const projectModel = ProjectTree(projects, {});
-    const { actions } = props;
 
     return (
       <ProjectTreeComponent
         model={projectModel}
         actions={actions}
-        viewState={viewState}
+        filters={filters}
       />
     );
   }
@@ -48,9 +49,13 @@ const History = props => {
 };
 
 const mapStateToProps = reduxState => {
-  const viewState = getProjectTreeViewState(reduxState);
+  const skillFiltersData = getSkillFiltersFromState(reduxState);
 
-  return { viewState };
+  return {
+    filters: {
+      skill: new SkillFiltersModel({ data: skillFiltersData })
+    }
+  };
 };
 
 const HistoryWithState = connect(mapStateToProps)(History);
