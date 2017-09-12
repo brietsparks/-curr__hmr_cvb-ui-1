@@ -34,8 +34,8 @@ const History = props => {
   const { filters } = props;
 
   if (projects) {
-    const projectModel = ProjectTree(projects, {});
-
+    const projectModel = ProjectTree(projects, { id: "0" });
+    
     return (
       <ProjectTreeComponent
         model={projectModel}

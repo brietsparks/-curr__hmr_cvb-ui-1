@@ -5,6 +5,22 @@ export default class AbstractProjectTreeNode {
     this.parentModel = parentModel;
   }
 
+  getAncestorModels() {
+    let ancestors = [];
+
+    const parent = this.parentModel;
+
+    if (parent) {
+      ancestors = [parent, ...parent.getAncestorModels()];
+    }
+
+    return ancestors;
+  }
+
+  getAncestorIds() {
+    return this.getAncestorModels().map(ancestor => ancestor.id);
+  }
+
   getAttributes(attributes = []) {
     const map = {};
 

@@ -2,12 +2,9 @@ export const ContainsNestedSkills = ({
   projectModel,
   skillFiltersModel
 }) => () => {
-  const skillIds = skillFiltersModel.getSkillIdsByProjectId(projectModel.id);
+  const ancestorIds = projectModel.getAncestorIds();
 
-  const contains = projectModel.containsSkillIds(skillIds);
+  const skillIds = skillFiltersModel.getSkillIdsByProjectIds(ancestorIds);
 
-  console.log(skillIds, projectModel.getSkills());
-
-  console.log(contains);
-  return contains;
+  return projectModel.containsSkillIds(skillIds);
 };

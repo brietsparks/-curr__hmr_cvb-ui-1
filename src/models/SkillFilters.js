@@ -4,13 +4,13 @@ export default class SkillFilters {
     this._data = data;
   }
 
-  // get skill filters for a project by its id
-  getFiltersByProjectId(projectId) {
-    return this._data.filter(sf => sf.projectId === projectId);
+  // get skill filters that have any of the passed in project ids
+  getFiltersByProjectIds(projectIds) {
+    return this._data.filter(sf => projectIds.includes(sf.projectId));
   }
 
-  // get the skill ids applied to a project
-  getSkillIdsByProjectId(projectId) {
-    return this.getFiltersByProjectId(projectId).map(sf => sf.skillId);
+  // get the skill ids applied to projects, given their project ids
+  getSkillIdsByProjectIds(projectIds) {
+    return this.getFiltersByProjectIds(projectIds).map(sf => sf.skillId);
   }
 }
