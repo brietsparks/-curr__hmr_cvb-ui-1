@@ -4,17 +4,21 @@ import UtilizationList from 'src/components/UtilizationList';
 import SampleList from 'src/components/SampleList';
 
 const Contribution = ({
-  id,
-  short_summary,
-  long_summary,
-  samples,
-  utilizations,
-  matchesFilter
+  model,
+  actions,
+  viewState
 }) => {
+  const {
+    id,
+    short_summary,
+    long_summary,
+    samples,
+    utilizations,
+  } = model;
+
   return (
     <div>
       <div>
-        <h4>MatchesFilter {matchesFilter ? "1" : "0"}</h4>
         <p><strong>Summary:</strong> {short_summary}</p>
         <p>Summary (cont'd): {long_summary}</p>
       </div>

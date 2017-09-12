@@ -1,12 +1,16 @@
 import React from 'react';
 
-import Contribution from 'src/components/Contribution';
+import Contribution from '../Contribution';
 
-const ContributionList = ({ contributions }) => {
+const ContributionList = ({ models, actions, viewState }) => {
 
-  const contributionComponents = contributions.map(contribution => (
-    <li key={contribution.id}>
-      <Contribution {...contribution} />
+  const contributionComponents = models.map(model => (
+    <li key={model.id}>
+      <Contribution
+        model={model}
+        actions={actions}
+        viewState={viewState}
+      />
     </li>
   ));
 

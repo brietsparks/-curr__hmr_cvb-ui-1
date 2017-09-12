@@ -1,6 +1,7 @@
 export default class AbstractProjectTreeNode {
   constructor({ data, parentModel }) {
     Object.keys(data).forEach(k => this[k] = data[k]);
+    this._data = data;
     this.parentModel = parentModel;
   }
 

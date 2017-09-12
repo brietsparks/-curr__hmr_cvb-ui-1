@@ -8,20 +8,22 @@ import SkillFilter from './SkillFilter';
 // HOC
 import Filterable from './FilterableHOC';
 
-export const Project = (props) => {
+export const Project = ({
+  actions,
+  viewState,
+  model,
+}) => {
   const {
-    actions,
-    viewState,
-    projectModel,
+    id,
+    title,
+    subtitle,
+    contributionModels = [],
+    childProjectModels = [],
+  } = model;
 
-    id, title, subtitle,
-    contributions = [],
-    childProjects = [],
-  } = props;
-
-  const hasContributions = contributions.length > 0;
-  const hasChildProjects = childProjects.length > 0;
-
+  const hasContributions = contributionModels.length > 0;
+  const hasChildProjects = childProjectModels.length > 0;
+  
   return (
     <div>
       <div>
@@ -30,19 +32,19 @@ export const Project = (props) => {
       </div>
 
       <div>
-        <SkillFilter
-          projectId={id}
-          filterableSkills={projectModel.getSkills()}
-          addSkillFilter={actions.addSkillFilter}
-          removeSkillFilter={actions.removeSkillFilter}
-        />
+        {/*<SkillFilter*/}
+          {/*projectId={id}*/}
+          {/*filterableSkills={projectModel.getSkills()}*/}
+          {/*addSkillFilter={actions.addSkillFilter}*/}
+          {/*removeSkillFilter={actions.removeSkillFilter}*/}
+        {/*/>*/}
 
         <div>
           { hasContributions &&
           <div>
             <p>Contributions</p>
             <ContributionList
-              contributions={contributions}
+              models={contributionModels}
               actions={actions}
               viewState={viewState}
             />
@@ -53,7 +55,7 @@ export const Project = (props) => {
           <div>
             <p>Projects</p>
             <ProjectTreeList
-              trees={childProjects}
+              models={childProjectModels}
               actions={actions}
               viewState={viewState}
             />
@@ -66,4 +68,5 @@ export const Project = (props) => {
   );
 };
 
-export default Filterable(Project);
+// export default Filterable(Project);
+export default (Project);

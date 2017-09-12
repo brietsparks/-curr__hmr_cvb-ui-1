@@ -1,6 +1,6 @@
-export Contribution from './Contribution';
-export ContributionList from './ContributionList';
-export Project from './Project';
-export ProjectList from './ProjectList';
+export { default as Contribution } from './Contribution';
+export { default as ContributionList } from './ContributionList';
+export { default as Project } from './Project';
+export { default as ProjectList } from './ProjectList';
 
-export default './Project';
+export { default } from './Project';

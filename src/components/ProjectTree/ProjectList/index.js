@@ -1,17 +1,16 @@
 import React from 'react';
 
-import ProjectTree from '../Project';
+import Project from '../Project';
 
-const ProjectTreeList = ({ trees, addSkillFilter, removeSkillFilter }) => {
-  const projectComponents = trees.map(project => {
+const ProjectTreeList = ({ models, actions, viewState }) => {
 
+  const projectComponents = models.map(model => {
     return (
-      <li key={project.id}>
-        <ProjectTree
-          {...project}
-
-          addSkillFilter={addSkillFilter}
-          removeSkillFilter={removeSkillFilter}
+      <li key={model.id}>
+        <Project
+          model={model}
+          actions={actions}
+          viewState={viewState}
         />
       </li>
     )

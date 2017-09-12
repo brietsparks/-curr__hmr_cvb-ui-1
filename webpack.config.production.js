@@ -29,5 +29,13 @@ module.exports = {
       sourceMap: true,
       comments: false
     })
-  ]
+  ],
+
+  resolve: {
+    extensions: ['.js'],
+    modules: ['node_modules'],
+    alias: {
+      src: path.resolve(__dirname, 'src')
+    }
+  },
 };
