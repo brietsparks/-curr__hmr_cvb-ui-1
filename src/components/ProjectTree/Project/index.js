@@ -6,12 +6,11 @@ import ProjectTreeList from '../ProjectList';
 import SkillFilter from './SkillFilter';
 
 // HOC
-import Filterable from './FilterableHOC';
+import Filterable from '../FilterableHOC';
 
 export const Project = ({
   actions,
   filters,
-  appliedFilters,
   model,
 }) => {
 
@@ -34,7 +33,8 @@ export const Project = ({
       <div>
         <SkillFilter
           projectId={id}
-          filterableSkills={model.getSkills()}
+          projectModel={model}
+          skillFilters={filters.skill}
           addSkillFilter={actions.addSkillFilter}
           removeSkillFilter={actions.removeSkillFilter}
         />
@@ -46,6 +46,7 @@ export const Project = ({
             <ContributionList
               models={contributionModels}
               actions={actions}
+              filters={filters}
             />
           </div>
           }

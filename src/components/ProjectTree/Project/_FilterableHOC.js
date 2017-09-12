@@ -2,7 +2,7 @@ import React from 'react';
 
 // functions
 import { evaluateFilterCallbacks } from '../util';
-import { ContainsNestedSkills } from './filterCallbacks';
+import { ContainsSkills } from '../filterCallbacks';
 
 export const FilterableHOC = ProjectComponent => class Filterable extends React.Component {
 
@@ -11,7 +11,7 @@ export const FilterableHOC = ProjectComponent => class Filterable extends React.
 
     // EVAL FILTERS
     const meetsFilterCriteria = evaluateFilterCallbacks([
-      ContainsNestedSkills({ projectModel: model, skillFiltersModel: filters.skill })
+      ContainsSkills({ model, skillFiltersModel: filters.skill })
     ]);
 
     if (meetsFilterCriteria) {

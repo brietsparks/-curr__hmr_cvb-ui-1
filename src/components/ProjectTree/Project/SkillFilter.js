@@ -2,24 +2,30 @@ import React from 'react';
 
 const SkillFilter = ({
   projectId,
-  filterableSkills = [],
+  projectModel,
+  skillFilters,
   addSkillFilter,
   removeSkillFilter
 }) => {
-  const checkBoxes = filterableSkills.map(skill => (
-    <label key={skill.id}>
+  const filterableSkills = projectModel.getSkills() || [];
 
-      {skill.canonical_name}
+  const checkBoxes = filterableSkills.map(skill => {
+    return (
+      <label key={skill.id}>
 
-      <input type="checkbox" onChange={ e => {
-        const skillId = skill.id;
-        e.target.checked
-          ? addSkillFilter({ projectId, skillId })
-          : removeSkillFilter({ projectId, skillId })
-      } }/>
+        {skill.canonical_name}
 
-    </label>
-  ));
+
+        <input type="checkbox" onChange={ e => {
+          const skillId = skill.id;
+          e.target.checked
+            ? addSkillFilter({ projectId, skillId })
+            : removeSkillFilter({ projectId, skillId })
+        } }/>
+
+      </label>
+    )
+  });
 
   return (
     <div>

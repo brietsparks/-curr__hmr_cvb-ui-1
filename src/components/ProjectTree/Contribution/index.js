@@ -3,6 +3,8 @@ import React from 'react';
 import UtilizationList from 'src/components/UtilizationList';
 import SampleList from 'src/components/SampleList';
 
+import Filterable from '../FilterableHOC';
+
 const Contribution = ({
   model,
   actions,
@@ -35,4 +37,4 @@ const Contribution = ({
   )
 };
 
-export default Contribution;
+export default Filterable(Contribution);
