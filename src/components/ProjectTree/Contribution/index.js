@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from 'semantic-ui-react'
+import { Card, Divider, Accordion, Icon } from 'semantic-ui-react'
 
 import UtilizationList from 'src/components/UtilizationList';
 import SampleList from 'src/components/SampleList';
@@ -17,22 +17,54 @@ const Contribution = ({
     utilizations,
   } = model;
 
+  const hasUtilizations = utilizations.length > 0;
+  const hasSamples = samples.length > 0;
+
+  const hasReferenceData = hasUtilizations || hasSamples;
+
+  const hasLongSummary = !!long_summary;
+
   return (
-    <Card style={{ marginLeft: '.55em' }}>
+    <Card style={{
+      marginLeft: '.55em',
+      marginBottom: '.96em',
+      padding: 10
+    }}>
       <div>
-        <p><strong>Summary:</strong> {short_summary}</p>
-        <p>Summary (cont'd): {long_summary}</p>
+        <p><strong>{short_summary}</strong></p>
       </div>
 
-      <div>
-        <p>Skill Utilizations</p>
-        <UtilizationList utilizations={utilizations}/>
-      </div>
+      { hasUtilizations &&
+        <div>
+          <p>Skill Utilizations</p>
+          <UtilizationList utilizations={utilizations}/>
+        </div>
+      }
 
-      <div>
-        <p>Work samples</p>
-        <SampleList samples={samples}/>
-      </div>
+      { hasSamples &&
+        <div>
+          <p>Work samples</p>
+          <SampleList samples={samples}/>
+        </div>
+      }
+
+      { hasReferenceData && hasLongSummary &&
+        <Divider/>
+      }
+
+      { hasLongSummary &&
+        <Accordion>
+          <Accordion.Title>
+            <Icon name='dropdown' />
+            More details
+          </Accordion.Title>
+
+          <Accordion.Content>
+            <p>{long_summary}</p>
+          </Accordion.Content>
+        </Accordion>
+      }
+
     </Card>
   )
 };
