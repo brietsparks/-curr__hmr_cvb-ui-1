@@ -1,23 +1,23 @@
 import React from 'react';
+import { Card } from 'semantic-ui-react'
 
 import Contribution from '../Contribution';
 
 const ContributionList = ({ models, actions, filters }) => {
 
   const contributionComponents = models.map(model => (
-    <li key={model.id}>
-      <Contribution
-        model={model}
-        actions={actions}
-        filters={filters}
-      />
-    </li>
+    <Contribution
+      key={model.id}
+      model={model}
+      actions={actions}
+      filters={filters}
+    />
   ));
 
   return (
-    <ul>
+    <Card.Group>
       {contributionComponents}
-    </ul>
+    </Card.Group>
   );
 };
 

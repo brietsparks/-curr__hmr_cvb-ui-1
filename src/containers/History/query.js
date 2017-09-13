@@ -12,6 +12,7 @@ export const ProjectListQuery = userId => gql`
         id,
         parent_id,
         short_summary,
+        long_summary,
         utilizations {
           id,
           contribution_id,

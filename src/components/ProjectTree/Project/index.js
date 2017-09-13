@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Sidebar, Button, Segment, Menu } from 'semantic-ui-react'
+import { Sidebar, Button, Item, Menu } from 'semantic-ui-react'
 
 
 // Components
@@ -36,53 +36,52 @@ export class Project extends React.Component {
     const hasChildProjects = childProjectModels.length > 0;
 
     return (
-      <div>
-        <div>
-          <h2>{title}</h2>
-          <h3>{subtitle}</h3>
-        </div>
+      <Item>
+        <Item.Content>
+          <Item.Header as={'h3'}>{title}</Item.Header>
+          <Item.Meta>{subtitle}</Item.Meta>
 
-        <Button onClick={ () => { this.setState({ showSidebar: !showSidebar }) } }/>
+          <Button onClick={ () => { this.setState({ showSidebar: !showSidebar }) } }/>
 
-        <Sidebar.Pushable as={Segment}>
-          <Sidebar as={Menu} animation='push' width='thin' visible={showSidebar} icon='labeled' vertical inverted>
-            <Menu.Item name="skill_filter">
-              <SkillFilter
-                projectId={id}
-                projectModel={model}
-                skillFilters={filters.skill}
-                addSkillFilter={actions.addSkillFilter}
-                removeSkillFilter={actions.removeSkillFilter}
-              />
-            </Menu.Item>
-          </Sidebar>
+          <Sidebar.Pushable as={'div'}>
+            <Sidebar as={Menu} animation='push' width='thin' visible={showSidebar} icon='labeled' vertical inverted>
+              <Menu.Item name="skill_filter">
+                <SkillFilter
+                  projectId={id}
+                  projectModel={model}
+                  skillFilters={filters.skill}
+                  addSkillFilter={actions.addSkillFilter}
+                  removeSkillFilter={actions.removeSkillFilter}
+                />
+              </Menu.Item>
+            </Sidebar>
 
-          <Sidebar.Pusher>
-            { hasContributions &&
-            <div>
-              <p>Contributions</p>
-              <ContributionList
-                models={contributionModels}
-                actions={actions}
-                filters={filters}
-              />
-            </div>
-            }
+            <Sidebar.Pusher>
+              { hasContributions &&
+              <div>
+                <p>Contributions</p>
+                <ContributionList
+                  models={contributionModels}
+                  actions={actions}
+                  filters={filters}
+                />
+              </div>
+              }
 
-            { hasChildProjects &&
-            <div>
-              <p>Projects</p>
-              <ProjectTreeList
-                models={childProjectModels}
-                actions={actions}
-                filters={filters}
-              />
-            </div>
-            }
-          </Sidebar.Pusher>
-        </Sidebar.Pushable>
-
-      </div>
+              { hasChildProjects &&
+              <div>
+                <p>Projects</p>
+                <ProjectTreeList
+                  models={childProjectModels}
+                  actions={actions}
+                  filters={filters}
+                />
+              </div>
+              }
+            </Sidebar.Pusher>
+          </Sidebar.Pushable>
+        </Item.Content>
+      </Item>
     );
   }
 }
