@@ -31,7 +31,11 @@ export default class Project extends ProjectTreeNode {
     this.contributionModels.forEach(cm => skills = skills.concat(cm.getSkills()));
     this.childProjectModels.forEach(cpm => skills = skills.concat(cpm.getSkills()));
 
-    return uniqBy(skills, skill => skill.id);
+    const unique = uniqBy(skills, skill => skill.id);
+
+    this.sortSkills(unique);
+
+    return unique;
   }
 
   getDescendantProjectById(id) {

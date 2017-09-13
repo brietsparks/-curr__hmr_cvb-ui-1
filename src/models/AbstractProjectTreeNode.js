@@ -4,6 +4,14 @@ export default class AbstractProjectTreeNode {
     this._data = data;
     this.parentModel = parentModel;
   }
+  
+  sortSkills(skills) {
+    return skills.sort((s1, s2) => {
+      if(s1.canonical_name < s2.canonical_name) return -1;
+      if(s1.canonical_name > s2.canonical_name) return 1;
+      return 0;
+    })
+  }
 
   getAncestorModels() {
     let ancestors = [];

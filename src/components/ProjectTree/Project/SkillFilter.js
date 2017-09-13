@@ -11,19 +11,17 @@ const SkillFilter = ({
 
   const checkBoxes = filterableSkills.map(skill => {
     return (
-      <label key={skill.id}>
-
-        {skill.canonical_name}
-
-
-        <input type="checkbox" onChange={ e => {
-          const skillId = skill.id;
-          e.target.checked
-            ? addSkillFilter({ projectId, skillId })
-            : removeSkillFilter({ projectId, skillId })
-        } }/>
-
-      </label>
+      <p key={skill.id}>
+        <label>
+          <input type="checkbox" onChange={ e => {
+            const skillId = skill.id;
+            e.target.checked
+              ? addSkillFilter({ projectId, skillId })
+              : removeSkillFilter({ projectId, skillId })
+          } }/>
+          {skill.canonical_name}
+        </label>
+      </p>
     )
   });
 
