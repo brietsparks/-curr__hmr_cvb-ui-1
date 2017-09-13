@@ -1,4 +1,5 @@
 import React from 'react';
+import Chip from 'material-ui/Chip';
 
 import Skill from 'src/components/Skill';
 
@@ -6,9 +7,9 @@ const Utilization  = ({
   id, contribution_id, skill
 }) => {
   return (
-    <div>
+    <Chip>
       <Skill {...skill} />
-    </div>
+    </Chip>
   );
 };
 

@@ -9,6 +9,8 @@ const Skill = ({
   return (
     <div>
       <p>{canonical_name}</p>
+
+
     </div>
   );
 };

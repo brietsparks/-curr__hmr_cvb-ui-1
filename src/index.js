@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { AppContainer } from 'react-hot-loader';
 import { ApolloProvider } from 'react-apollo';
 
+import App from './App';
 import { apolloClient, store } from './state';
 
 
@@ -13,7 +13,9 @@ const render = Component =>
   ReactDOM.render(
     <AppContainer>
       <ApolloProvider client={apolloClient} store={store}>
-        <Component/>
+        <MuiThemeProvider>
+          <Component/>
+        </MuiThemeProvider>
       </ApolloProvider>
     </AppContainer>,
     rootEl

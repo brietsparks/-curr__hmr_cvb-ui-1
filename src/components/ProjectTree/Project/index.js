@@ -44,7 +44,8 @@ export class Project extends React.Component {
           <Button onClick={ () => { this.setState({ showSidebar: !showSidebar }) } }/>
 
           <Sidebar.Pushable as={'div'}>
-            <Sidebar as={Menu} animation='push' width='thin' visible={showSidebar} icon='labeled' vertical inverted>
+            <Sidebar as={Menu} animation='push' width='thin' visible={showSidebar}
+                     icon='labeled' vertical inverted>
               <Menu.Item name="skill_filter">
                 <SkillFilter
                   projectId={id}
@@ -56,7 +57,7 @@ export class Project extends React.Component {
               </Menu.Item>
             </Sidebar>
 
-            <Sidebar.Pusher>
+            <Sidebar.Pusher style={{ marginLeft: showSidebar ? 10 : 0 }}>
               { hasContributions &&
               <div>
                 <p>Contributions</p>
