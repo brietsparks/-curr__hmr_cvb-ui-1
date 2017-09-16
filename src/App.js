@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
-import History from './containers/History';
+import ProjectTreeContainer from './containers/ProjectTree';
 
 export default class App extends Component {
   render() {
     return (
-      <History/>
+      <ProjectTreeContainer/>
     );
   }
 }

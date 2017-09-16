@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash';
 
-import { actionTypes } from './constants';
+import { actions as actionTypes } from './constants';
 
 const defaultState = {
 };

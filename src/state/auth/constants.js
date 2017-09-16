@@ -1,5 +1,8 @@
 export const stateKey = 'authState';
 
-export const actionTypes = {
+export const accessTokenKey = 'access_token';
+
+export const actions = {
+
 
 };

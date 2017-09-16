@@ -19,7 +19,7 @@ import SkillFiltersModel from 'src/models/SkillFilters';
 import { ProjectListQuery } from './query';
 
 
-const History = props => {
+const ProjectTreeContainer = props => {
 
   const actions = {};
   actions.addSkillFilter = ({ projectId, skillId }) => (
@@ -58,10 +58,10 @@ const mapStateToProps = reduxState => {
   };
 };
 
-const HistoryWithState = connect(mapStateToProps)(History);
-const HistoryWithStateAndData = graphql(ProjectListQuery("github|5377854"))(HistoryWithState);
-export default HistoryWithStateAndData;
+const ProjectTreeContainerWithState = connect(mapStateToProps)(ProjectTreeContainer);
+const ProjectTreeContainerWithStateAndData = graphql(ProjectListQuery("github|5377854"))(ProjectTreeContainerWithState);
+export default ProjectTreeContainerWithStateAndData;
 
-// const HistoryWithData = graphql(ProjectListQuery("0"))(History);
-// const HistoryWithDataAndState = connect(state => state)(HistoryWithData);
-// export default HistoryWithDataAndState;
+// const ProjectTreeContainerWithData = graphql(ProjectListQuery("0"))(ProjectTreeContainer);
+// const ProjectTreeContainerWithDataAndState = connect(state => state)(ProjectTreeContainerWithData);
+// export default ProjectTreeContainerWithDataAndState;
