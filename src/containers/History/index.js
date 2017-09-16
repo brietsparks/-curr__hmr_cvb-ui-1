@@ -59,7 +59,7 @@ const mapStateToProps = reduxState => {
 };
 
 const HistoryWithState = connect(mapStateToProps)(History);
-const HistoryWithStateAndData = graphql(ProjectListQuery("0"))(HistoryWithState);
+const HistoryWithStateAndData = graphql(ProjectListQuery("github|5377854"))(HistoryWithState);
 export default HistoryWithStateAndData;
 
 // const HistoryWithData = graphql(ProjectListQuery("0"))(History);

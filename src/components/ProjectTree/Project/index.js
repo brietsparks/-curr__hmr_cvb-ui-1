@@ -1,7 +1,5 @@
 import React from 'react';
-
-import { Sidebar, Button, Item, Menu } from 'semantic-ui-react'
-
+import { Sidebar, Button, Item, Menu, Icon } from 'semantic-ui-react'
 
 // Components
 import ContributionList from '../ContributionList';
@@ -41,11 +39,17 @@ export class Project extends React.Component {
           <Item.Header as={'h3'}>{title}</Item.Header>
           <Item.Meta>{subtitle}</Item.Meta>
 
-          <Button onClick={ () => { this.setState({ showSidebar: !showSidebar }) } }/>
-
           <Sidebar.Pushable as={'div'}>
+
             <Sidebar as={Menu} animation='push' width='thin' visible={showSidebar}
                      icon='labeled' vertical inverted>
+
+              <Menu.Item name="skill_filter">
+                <Icon
+                  name="close"
+                  onClick={ () => { this.setState({ showSidebar: false }) } }
+                />
+              </Menu.Item>
               <Menu.Item name="skill_filter">
                 <SkillFilter
                   projectId={id}
@@ -58,6 +62,11 @@ export class Project extends React.Component {
             </Sidebar>
 
             <Sidebar.Pusher style={{ marginLeft: showSidebar ? 10 : 0 }}>
+              <Icon
+                name="filter"
+                onClick={ () => { this.setState({ showSidebar: !showSidebar }) } }
+              />
+
               { hasContributions &&
               <div>
                 <p>Contributions</p>

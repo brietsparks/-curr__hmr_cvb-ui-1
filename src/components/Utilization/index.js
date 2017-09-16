@@ -7,7 +7,7 @@ const Utilization  = ({
   id, contribution_id, skill
 }) => {
   return (
-    <Chip>
+    <Chip style={{ cursor: 'pointer' }}>
       <Skill {...skill} />
     </Chip>
   );
