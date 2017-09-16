@@ -1,25 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { AppContainer } from 'react-hot-loader';
+import { AppContainer as HotloaderContainer } from 'react-hot-loader';
 import { ApolloProvider } from 'react-apollo';
 
-import App from './App';
+import RootAppComponent from './RootAppComponent';
 import { apolloClient, store } from './state';
 
 
 const rootEl = document.getElementById('root');
 const render = Component =>
   ReactDOM.render(
-    <AppContainer>
+    <HotloaderContainer>
       <ApolloProvider client={apolloClient} store={store}>
         <MuiThemeProvider>
           <Component/>
         </MuiThemeProvider>
       </ApolloProvider>
-    </AppContainer>,
+    </HotloaderContainer>,
     rootEl
   );
 
-render(App);
-if (module.hot) module.hot.accept('./App', () => render(App));
+render(RootAppComponent);
+
+if (module.hot) {
+  module.hot.accept(
+    './RootAppComponent',
+    () => render(RootAppComponent)
+  );
+}

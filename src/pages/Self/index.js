@@ -2,13 +2,13 @@ import React from 'react';
 
 import ProjectTreeContainer from 'src/containers/ProjectTree';
 
-export const UserPage = props => {
+export const SelfPage = props => {
 
-  const { userId } = props.match.params;
+  const userId = null;
 
   return (
     <ProjectTreeContainer userId={userId} />
   );
 };
 
-export default UserPage;
+export default SelfPage;

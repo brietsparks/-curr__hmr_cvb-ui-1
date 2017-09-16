@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { loginFinalize } from 'src/state/auth';
+import { loginFinalize } from 'src/state/auth/actions';
 
 class Callback extends Component {
   componentWillMount() {

@@ -1,8 +1,8 @@
 import { gql } from 'react-apollo';
 
-export const ProjectListQuery = userId => gql`
-  query {
-    getProjectsByUserId(user_id: "${userId.toString()}") {
+export const projectListQuery = gql`
+  query ($user_id: String!) {
+    getProjectsByUserId(user_id: $user_id) {
       id,
       user_id,
       parent_id,

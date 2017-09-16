@@ -16,22 +16,23 @@ import { addSkillFilter, removeSkillFilter } from 'src/state/projectTreeView/act
 import SkillFiltersModel from 'src/models/SkillFilters';
 
 // graphql query
-import { ProjectListQuery } from './query';
+import { projectListQuery } from './query';
 
 
 const ProjectTreeContainer = props => {
 
+  const { dispatch, filters, userId } = props;
+  const projects = getProjectsFromProps(props);
+
   const actions = {};
   actions.addSkillFilter = ({ projectId, skillId }) => (
-    props.dispatch(addSkillFilter({ projectId, skillId }))
+    dispatch(addSkillFilter({ projectId, skillId }))
   );
 
   actions.removeSkillFilter = ({ projectId, skillId }) => (
-    props.dispatch(removeSkillFilter({ projectId, skillId }))
+    dispatch(removeSkillFilter({ projectId, skillId }))
   );
 
-  const projects = getProjectsFromProps(props);
-  const { filters } = props;
 
   if (projects) {
     const projectModel = ProjectTree(projects, { id: "0" });
@@ -58,10 +59,16 @@ const mapStateToProps = reduxState => {
   };
 };
 
-const ProjectTreeContainerWithState = connect(mapStateToProps)(ProjectTreeContainer);
-const ProjectTreeContainerWithStateAndData = graphql(ProjectListQuery("github|5377854"))(ProjectTreeContainerWithState);
-export default ProjectTreeContainerWithStateAndData;
+const ProjectTreeContainerWithState =
+  connect(mapStateToProps)(ProjectTreeContainer);
 
-// const ProjectTreeContainerWithData = graphql(ProjectListQuery("0"))(ProjectTreeContainer);
-// const ProjectTreeContainerWithDataAndState = connect(state => state)(ProjectTreeContainerWithData);
-// export default ProjectTreeContainerWithDataAndState;
+const ProjectTreeContainerWithStateAndData =
+  graphql(
+    projectListQuery,
+    {
+      options: ownProps => ({ variables: { user_id: ownProps.userId } })
+    }
+
+  )(ProjectTreeContainerWithState);
+
+export default ProjectTreeContainerWithStateAndData;
