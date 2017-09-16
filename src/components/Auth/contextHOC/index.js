@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export const withAuthContextHOC = Component => class WithAuthContext extends Component {
+export const withAuthContext = Component => class WithAuthContext extends Component {
 
   static contextTypes = {
     userIsAuthenticated: PropTypes.bool,
@@ -21,4 +21,4 @@ export const withAuthContextHOC = Component => class WithAuthContext extends Com
   }
 };
 
-export default withContextHOC;
+export default withAuthContext;

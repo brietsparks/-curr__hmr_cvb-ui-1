@@ -1,5 +1,5 @@
 import React from 'react';
-import withAuthContext from 'src/hocs/withAuthContext';
+import withAuthContext from '../contextHOC';
 
 export const AuthGuard = ({
   userIsAuthenticated,
