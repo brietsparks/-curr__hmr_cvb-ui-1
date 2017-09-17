@@ -5,17 +5,17 @@ export const withAuthContext = Component => class WithAuthContext extends Compon
 
   static contextTypes = {
     userIsAuthenticated: PropTypes.bool,
-    userScope: PropTypes.bool
+    userScopes: PropTypes.arrayOf(PropTypes.string)
   };
 
   render() {
-    const { userIsAuthenticated, userScope } = this.context;
+    const { userIsAuthenticated, userScopes } = this.context;
 
     return (
       <Component
         {...this.props}
         userIsAuthenticated={userIsAuthenticated}
-        userScope={userScope}
+        userScopes={userScopes}
       />
     )
   }

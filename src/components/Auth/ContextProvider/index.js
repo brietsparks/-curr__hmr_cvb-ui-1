@@ -1,25 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export default class AuthContext extends Component {
+export default class AuthContextProvider extends Component {
 
   static childContextTypes = {
     userIsAuthenticated: PropTypes.bool,
-    userScope: PropTypes.bool
+    userScopes: PropTypes.arrayOf(PropTypes.string)
   };
 
   getChildContext() {
-    return {
-      userIsAuthenticated: true,
-      userScope: 'dummy scope'
-    };
+    const { userIsAuthenticated, userScopes } = this.props;
+
+    return { userIsAuthenticated, userScopes };
   }
 
   render() {
     return (
-      <div>
+      <span>
         {this.props.children}
-      </div>
+      </span>
     );
   }
 

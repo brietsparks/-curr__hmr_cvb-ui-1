@@ -10,4 +10,4 @@ export const API_GATEWAY_ROOT_ENDPOINT = API_GATEWAY_URL + '/graphql';
 export const AUTH0_DOMAIN = 'bsapaka.auth0.com';
 export const AUTH0_CLIENT_ID = '4FXSDQeNobJ2XHR16pkKjLzfuoAGSyb5';
 export const AUTH0_CALLBACK_URL = APP_URL + '/callback';
-export const AUTH0_RESUME_SERVICE_AUD = 'builderService.auth0.identifier';
+export const AUTH0_RESUME_SERVICE_AUD_ID = 'builder_service';

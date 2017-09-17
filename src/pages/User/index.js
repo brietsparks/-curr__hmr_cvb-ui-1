@@ -1,5 +1,6 @@
 import React from 'react';
 
+import AuthContainer from 'src/containers/Auth';
 import ProjectTreeContainer from 'src/containers/ProjectTree';
 
 export const UserPage = props => {
@@ -7,7 +8,9 @@ export const UserPage = props => {
   const { userId } = props.match.params;
 
   return (
-    <ProjectTreeContainer userId={userId} />
+    <AuthContainer>
+      <ProjectTreeContainer userId={userId} />
+    </AuthContainer>
   );
 };
 

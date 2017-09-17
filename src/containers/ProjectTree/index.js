@@ -63,12 +63,10 @@ const ProjectTreeContainerWithState =
   connect(mapStateToProps)(ProjectTreeContainer);
 
 const ProjectTreeContainerWithStateAndData =
-  graphql(
-    projectListQuery,
-    {
-      options: ownProps => ({ variables: { user_id: ownProps.userId } })
-    }
-
-  )(ProjectTreeContainerWithState);
+  graphql(projectListQuery, {
+    options: ownProps => ({
+      variables: { user_id: ownProps.userId }
+    })
+  })(ProjectTreeContainerWithState);
 
 export default ProjectTreeContainerWithStateAndData;

@@ -8,10 +8,10 @@ import AboutPage from 'src/pages/About';
 
 export const Routes = (props) => (
   <div>
-      <Route
-        path="/self"
-        component={SelfPage}
-      />
+    <Route
+      path="/self"
+      component={SelfPage}
+    />
 
     <Route
       path='/user/:userId'
@@ -19,7 +19,7 @@ export const Routes = (props) => (
     />
 
     <Route
-      path="/auth-callback"
+      path="/callback"
       render={ (props) => <Auth0Callback {...props} /> }
     />
 

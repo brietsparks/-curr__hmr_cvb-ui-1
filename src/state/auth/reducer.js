@@ -3,6 +3,10 @@ import { cloneDeep } from 'lodash';
 import { actions as actionTypes } from './constants';
 
 const defaultState = {
+  user: {
+    id: null,
+    scopes: [],
+  },
 };
 
 const authReducer = (initialState = defaultState, action) => {
