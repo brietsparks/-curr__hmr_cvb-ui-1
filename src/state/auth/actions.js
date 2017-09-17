@@ -7,10 +7,15 @@ import { webAuth } from 'src/auth0';
 import { history } from 'src/routing';
 
 // state
-import { actions, accessTokenKey } from './constants';
+import { actions } from './constants';
 
-// util
+// storage
 import { getAccessToken } from 'src/util/localStorage';
+
+
+const accessTokenKey = 'access_token';
+const onAuthSuccessRedirectKey = 'login_redirect_route';
+
 
 export const setUser = ({ id, scope, initialized }) => {
   return {
@@ -25,26 +30,31 @@ export const initializeUser = (accessToken = null) => {
 
     const decoded = accessToken ? decode(accessToken) : null;
 
+    const id = decoded ? decoded.sub : null;
+    const initialized = true;
+
     dispatch(setUser({
-      id: decoded.sub,
+      id,
       // scope: decoded.scope,
-      initialized: true
+      initialized
     }));
   };
 };
 
-export const showAuth0 = () => {
+export const showAuth0 = ({ onSuccessRedirect }) => {
+  localStorage.setItem(onAuthSuccessRedirectKey, onSuccessRedirect || '/');
   webAuth.authorize();
 };
 
-export const login = ({ route }) => {
+export const login = () => {
   return dispatch => {
 
     // parse the callback url
-    webAuth.parseHash(window.location.hash, (err, authResult) => {
-      const { accessToken, expiresIn } = authResult;
+    webAuth.parseHash(window.location.hash, (err, parsed) => {
 
-      if (authResult && accessToken) {
+      if (parsed) {
+        const { accessToken, expiresIn } = parsed;
+
         // set token
         localStorage.setItem(accessTokenKey, accessToken);
 
@@ -55,17 +65,19 @@ export const login = ({ route }) => {
         // initialize user
         dispatch(initializeUser(accessToken));
 
-        // redirect
-        history.replace(route);
       } else if (err) {
         console.log(err);
-        alert(`Error: ${err.error}. Check the console for further details.`);
       }
+
+      // redirect
+      const redirectPath = localStorage.getItem(onAuthSuccessRedirectKey);
+      localStorage.removeItem(onAuthSuccessRedirectKey);
+      history.replace(redirectPath);
     });
   }
 };
 
-export const logout = ({ route }) => {
+export const logout = ({ onSuccessRedirect }) => {
   return dispatch => {
     localStorage.removeItem(accessTokenKey);
     localStorage.removeItem('expires_at');
@@ -76,6 +88,6 @@ export const logout = ({ route }) => {
       initialized: true
     }));
 
-    history.replace(route);
+    history.replace(onSuccessRedirect || '/');
   }
 };

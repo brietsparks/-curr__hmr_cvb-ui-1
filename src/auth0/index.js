@@ -14,7 +14,6 @@ export const webAuth = new auth0.WebAuth({
   audience: `${AUTH0_RESUME_SERVICE_AUD_ID}`,
   // audience: `https://${AUTH_CONFIG.domain}/userinfo`,
   responseType: 'token id_token',
-  scope: 'openid',
+  scope: 'read.history.other',
   nonce: '1234567890123456'
 });
-

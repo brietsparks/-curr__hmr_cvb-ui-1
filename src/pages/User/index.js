@@ -7,10 +7,11 @@ import Layout from 'src/components/Layout';
 
 export const UserPage = props => {
 
+  const { url } = props.match;
   const { userId } = props.match.params;
 
   return (
-    <AuthContainer>
+    <AuthContainer currentUrlPath={url}>
       <Layout>
         <ProjectTreeContainer userId={userId} />
       </Layout>

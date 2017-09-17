@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 // state
@@ -16,15 +17,18 @@ import { makeEnhancedChildComponents } from 'src/util/component';
 
 export class AuthContainer extends Component {
 
+  static propTypes = {
+    currentUrlPath: PropTypes.string.isRequired
+  };
+
   componentDidMount() {
-    console.log(this.props);
     if (!this.props.user.initialized) {
       this.props.initializeUser();
     }
   }
 
   render() {
-    const { user, children, showLogin, logout } = this.props;
+    const { user, children, showLogin, logout, currentUrlPath } = this.props;
 
     const childrenWithAuthActions =
       makeEnhancedChildComponents(children, { showLogin, logout });
@@ -41,11 +45,13 @@ export class AuthContainer extends Component {
 }
 
 const mapStateToProps = state => getAuthState(state);
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, ownProps ) => {
+  const { currentUrlPath } = ownProps;
+
   return {
     initializeUser: () => dispatch(initializeUser()),
-    showLogin: () => dispatch(showAuth0()),
-    logout: (redirectRoute) => dispatch(logoutAction({ route: redirectRoute }))
+    showLogin: (urlPath) => dispatch(showAuth0({ onSuccessRedirect: urlPath || currentUrlPath })),
+    logout: (urlPath) => dispatch(logoutAction({ onSuccessRedirect: urlPath || currentUrlPath }))
   };
 };
 

@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { login } from 'src/state/auth/actions';
+import { login as loginAction } from 'src/state/auth/actions';
 
 class Callback extends Component {
   componentWillMount() {
     // this.props.dispatch(login(this.props.redirectRoute || '/'));
 
-    const login = () => this.props.loginAction(this.props.redirectRoute || '/');
-    login();
+    this.props.login();
   }
 
   render() {
@@ -37,7 +36,7 @@ class Callback extends Component {
 const mapStateToProps = state => (state);
 const mapDispatchToProps = dispatch => {
   return {
-    loginAction: redirectRoute => dispatch(login({ route: redirectRoute }))
+    login: () => dispatch(loginAction())
   }
 };
 
