@@ -11,26 +11,22 @@ import { getUserScopes, checkUserIsAuthenticated } from './selectors';
 // components
 import AuthContextProvider from 'src/components/Auth/ContextProvider';
 
+// util
+import { makeEnhancedChildComponents } from 'src/util/component';
+
 export class AuthContainer extends Component {
 
   componentDidMount() {
-  }
-
-  makeEnhancedChild(child) {
-    const { showLogin, logoutAction } = this.props;
-
-    return React.cloneElement(child, { showLogin, logoutAction })
   }
 
   render() {
 
     const { user } = this.props;
 
-    const children = this.props.children;
+    const { children, showLogin, logoutAction } = this.props;
 
-    const childrenWithAuthActions =  children instanceof Array
-      ? children.map(child => this.makeEnhancedChild(child))
-      : this.makeEnhancedChild(children);
+    const childrenWithAuthActions =
+      makeEnhancedChildComponents(children, { showLogin, logoutAction })
 
     return (
       <AuthContextProvider
