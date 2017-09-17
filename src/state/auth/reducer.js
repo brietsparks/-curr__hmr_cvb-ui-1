@@ -5,7 +5,8 @@ import { actions as actionTypes } from './constants';
 const defaultState = {
   user: {
     id: null,
-    scopes: [],
+    scope: null,
+    initialized: false,
   },
 };
 
@@ -14,6 +15,9 @@ const authReducer = (initialState = defaultState, action) => {
   const payload = action.payload;
 
   switch (action.type) {
+    case actionTypes.user.SET.DEFAULT:
+      state.user = payload;
+      break;
   }
 
   return state;

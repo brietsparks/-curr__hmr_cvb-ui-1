@@ -14,7 +14,6 @@ export const UserPage = props => {
       <Layout>
         <ProjectTreeContainer userId={userId} />
       </Layout>
-
     </AuthContainer>
   );
 };

@@ -2,17 +2,21 @@ import React, { Component } from 'react';
 
 import { makeEnhancedChildComponents } from 'src/util/component';
 
+import Header from './Header';
+
 export class Layout extends Component {
   render() {
-    const { showLogin, children } = this.props;
+    const { showLogin, logout, userIsAuthenticated, children } = this.props;
 
     const enhancedChildren = makeEnhancedChildComponents(children, this.props);
 
     return (
       <div>
-        { showLogin &&
-          <button onClick={ () => showLogin()}>Login</button>
-        }
+        <Header
+          userIsAuthenticated={userIsAuthenticated}
+          showLogin={showLogin}
+          logout={logout}
+        />
 
         {enhancedChildren}
       </div>

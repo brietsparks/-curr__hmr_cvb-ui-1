@@ -20,7 +20,7 @@ export const Routes = (props) => (
 
     <Route
       path="/callback"
-      render={ (props) => <Auth0Callback {...props} /> }
+      render={ (props) => <Auth0Callback redirectRoute="/self" {...props} /> }
     />
 
     <Route

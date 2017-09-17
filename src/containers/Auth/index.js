@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 // state
 import { getAuthState } from 'src/state/auth/selectors';
-import { showAuth0, logout } from 'src/state/auth/actions';
+import { initializeUser, showAuth0, logout as logoutAction } from 'src/state/auth/actions';
 
 // container
 import { getUserScopes, checkUserIsAuthenticated } from './selectors';
@@ -17,16 +17,17 @@ import { makeEnhancedChildComponents } from 'src/util/component';
 export class AuthContainer extends Component {
 
   componentDidMount() {
+    console.log(this.props);
+    if (!this.props.user.initialized) {
+      this.props.initializeUser();
+    }
   }
 
   render() {
-
-    const { user } = this.props;
-
-    const { children, showLogin, logoutAction } = this.props;
+    const { user, children, showLogin, logout } = this.props;
 
     const childrenWithAuthActions =
-      makeEnhancedChildComponents(children, { showLogin, logoutAction })
+      makeEnhancedChildComponents(children, { showLogin, logout });
 
     return (
       <AuthContextProvider
@@ -42,8 +43,9 @@ export class AuthContainer extends Component {
 const mapStateToProps = state => getAuthState(state);
 const mapDispatchToProps = dispatch => {
   return {
+    initializeUser: () => dispatch(initializeUser()),
     showLogin: () => dispatch(showAuth0()),
-    logoutAction: (redirectRoute) => dispatch(logout({ route: redirectRoute }))
+    logout: (redirectRoute) => dispatch(logoutAction({ route: redirectRoute }))
   };
 };
 

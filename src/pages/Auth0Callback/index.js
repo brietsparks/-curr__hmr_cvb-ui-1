@@ -7,8 +7,8 @@ class Callback extends Component {
   componentWillMount() {
     // this.props.dispatch(login(this.props.redirectRoute || '/'));
 
-    // const login = this.props.loginAction(this.props.redirectRoute || '/');
-    // login();
+    const login = () => this.props.loginAction(this.props.redirectRoute || '/');
+    login();
   }
 
   render() {
@@ -34,7 +34,7 @@ class Callback extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => (state);
 const mapDispatchToProps = dispatch => {
   return {
     loginAction: redirectRoute => dispatch(login({ route: redirectRoute }))
